@@ -112,4 +112,6 @@ public final class AuthService {
             currentUser.setActive(resultSet.getBoolean("active"));
         }
     }
+
+
 }
