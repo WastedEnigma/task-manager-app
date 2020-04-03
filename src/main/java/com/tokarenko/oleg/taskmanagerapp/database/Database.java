@@ -1,6 +1,5 @@
 package com.tokarenko.oleg.taskmanagerapp.database;
 
-import com.tokarenko.oleg.taskmanagerapp.service.AuthService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
