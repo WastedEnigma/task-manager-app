@@ -6,12 +6,12 @@ public final class SecurityService {
 
     private SecurityService() { }
 
-    private static String encode(String text) {
+    public static String encode(String text) {
         byte[] encoded = Base64.encodeBase64(text.getBytes());
         return new String(encoded);
     }
 
-    private static String decode(String encodedText) {
+    public static String decode(String encodedText) {
         byte[] decoded = Base64.decodeBase64(encodedText.getBytes());
         return new String(decoded);
     }
