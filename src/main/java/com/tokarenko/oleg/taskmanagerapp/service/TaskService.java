@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.stream.Stream;
 
 import static com.tokarenko.oleg.taskmanagerapp.custom_query.TaskMySqlQuery.*;
 
@@ -112,19 +113,10 @@ public final class TaskService {
             }
 
             userTasksResultSet = preparedStatement.executeQuery();
+            userTasksResultSet.next();
 
-            // Check whether current user manages task with provided id
-            boolean hasNoTask = false;
-
-            while (userTasksResultSet.next()) {
-                hasNoTask = userTasksResultSet.getLong("tasks_id") != id;
-
-                if (!hasNoTask) {
-                    break;
-                }
-            }
-
-            if (hasNoTask) {
+            // Check whether current user manage any task with provided id
+            if (!userHasAnyTasks(userTasksResultSet, id)) {
                 return false;
             }
 
@@ -288,5 +280,15 @@ public final class TaskService {
             currentTask.setId(resultSet.getLong("id"));
             currentTask.setContent(resultSet.getString("content"));
         }
+    }
+
+    private static boolean userHasAnyTasks(ResultSet userTasksResultSet, long id) {
+        return Stream.of(userTasksResultSet).anyMatch(ut -> {
+            try {
+                return ut.getLong("tasks_id") == id;
+            } catch (SQLException e) {
+                return false;
+            }
+        });
     }
 }

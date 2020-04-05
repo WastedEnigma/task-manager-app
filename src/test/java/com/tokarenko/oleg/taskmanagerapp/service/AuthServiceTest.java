@@ -31,6 +31,6 @@ public class AuthServiceTest {
         String decodedPassword = SecurityService.decode(encodedPassword);
         System.out.println(encodedPassword + " -> " + decodedPassword);
 
-        assertEquals(password, SecurityService.decode(encodedPassword));
+        assertEquals(password, decodedPassword);
     }
 }
